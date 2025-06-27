@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>toLocaleDateString() Tester</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .option-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        .option-group h3 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .description {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .result-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 2px solid #4CAF50;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        .code-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+        }
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .preset-buttons button {
+            background: #2196f3;
+            font-size: 14px;
+            padding: 8px 15px;
+            margin-top: 0;
+        }
+        .preset-buttons button:hover {
+            background: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <h1>toLocaleDateString() Interactive Tester</h1>
+    
+    <div class="info-box">
+        <h3>What is toLocaleDateString()?</h3>
+        <p>The <strong>toLocaleDateString()</strong> method returns a string with a language-sensitive representation of the date portion of a Date object. It allows you to format dates according to different locales and customize how various date components are displayed.</p>
+        <p><strong>Syntax:</strong> <code>dateObj.toLocaleDateString([locales[, options]])</code></p>
+    </div>
+
+    <div class="container">
+        <h2>Test Date</h2>
+        <label for="testDate">Select a date to format:</label>
+        <input type="date" id="testDate" value="">
+        <div class="description">Choose any date to see how it's formatted with different options</div>
+    </div>
+
+    <div class="container">
+        <h2>Locale Settings</h2>
+        <div class="option-group">
+            <h3>Locale</h3>
+            <label for="locale">Select locale:</label>
+            <select id="locale">
+                <option value="en-US">en-US (English - United States)</option>
+                <option value="en-GB">en-GB (English - United Kingdom)</option>
+                <option value="fr-FR">fr-FR (French - France)</option>
+                <option value="de-DE">de-DE (German - Germany)</option>
+                <option value="es-ES">es-ES (Spanish - Spain)</option>
+                <option value="it-IT">it-IT (Italian - Italy)</option>
+                <option value="pt-BR">pt-BR (Portuguese - Brazil)</option>
+                <option value="ja-JP">ja-JP (Japanese - Japan)</option>
+                <option value="ko-KR">ko-KR (Korean - Korea)</option>
+                <option value="zh-CN">zh-CN (Chinese - China)</option>
+                <option value="ar-SA">ar-SA (Arabic - Saudi Arabia)</option>
+                <option value="he-IL">he-IL (Hebrew - Israel)</option>
+                <option value="ru-RU">ru-RU (Russian - Russia)</option>
+                <option value="hi-IN">hi-IN (Hindi - India)</option>
+            </select>
+            <div class="description">The locale determines the language and regional formatting conventions. Different locales have different date formats, month names, and ordering of date components.</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Formatting Options</h2>
+        
+        <div class="preset-buttons">
+            <button onclick="applyPreset('default')">Default Format</button>
+            <button onclick="applyPreset('full')">Full Format</button>
+            <button onclick="applyPreset('long')">Long Format</button>
+            <button onclick="applyPreset('short')">Short Format</button>
+            <button onclick="applyPreset('custom1')">Month & Year Only</button>
+            <button onclick="applyPreset('custom2')">Weekday & Date</button>
+        </div>
+
+        <div class="option-group">
+            <h3>Date Style (Preset Combinations)</h3>
+            <label for="dateStyle">dateStyle:</label>
+            <select id="dateStyle">
+                <option value="">Not set (use individual options)</option>
+                <option value="full">full - e.g., "Thursday, April 20, 2023"</option>
+                <option value="long">long - e.g., "April 20, 2023"</option>
+                <option value="medium">medium - e.g., "Apr 20, 2023"</option>
+                <option value="short">short - e.g., "4/20/23"</option>
+            </select>
+            <div class="description">dateStyle provides preset combinations of date formatting. When set, it overrides individual component options below.</div>
+        </div>
+
+        <div class="option-group">
+            <h3>Weekday</h3>
+            <label for="weekday">weekday:</label>
+            <select id="weekday">
+                <option value="">Not included</option>
+                <option value="long">long - e.g., "Thursday"</option>
+                <option value="short">short - e.g., "Thu"</option>
+                <option value="narrow">narrow - e.g., "T"</option>
+            </select>
+            <div class="description">Controls how the day of the week is displayed</div>
+        </div>
+
+        <div class="option-group">
+            <h3>Era</h3>
+            <label for="era">era:</label>
+            <select id="era">
+                <option value="">Not included</option>
+                <option value="long">long - e.g., "Anno Domini"</option>
+                <option value="short">short - e.g., "AD"</option>
+                <option value="narrow">narrow - e.g., "A"</option>
+            </select>
+            <div class="description">Displays the era (useful for historical dates or certain calendars)</div>
+        </div>
+
+        <div class="option-group">
+            <h3>Year</h3>
+            <label for="year">year:</label>
+            <select id="year">
+                <option value="">Default</option>
+                <option value="numeric">numeric - e.g., "2023"</option>
+                <option value="2-digit">2-digit - e.g., "23"</option>
+            </select>
+            <div class="description">Controls how the year is displayed</div>
+        </div>
+
+        <div class="option-group">
+            <h3>Month</h3>
+            <label for="month">month:</label>
+            <select id="month">
+                <option value="">Default</option>
+                <option value="numeric">numeric - e.g., "4"</option>
+                <option value="2-digit">2-digit - e.g., "04"</option>
+                <option value="long">long - e.g., "April"</option>
+                <option value="short">short - e.g., "Apr"</option>
+                <option value="narrow">narrow - e.g., "A"</option>
+            </select>
+            <div class="description">Controls how the month is displayed</div>
+        </div>
+
+        <div class="option-group">
+            <h3>Day</h3>
+            <label for="day">day:</label>
+            <select id="day">
+                <option value="">Default</option>
+                <option value="numeric">numeric - e.g., "1"</option>
+                <option value="2-digit">2-digit - e.g., "01"</option>
+            </select>
+            <div class="description">Controls how the day of the month is displayed</div>
+        </div>
+
+        <div class="option-group">
+            <h3>Time Zone</h3>
+            <label for="timeZone">timeZone:</label>
+            <select id="timeZone">
+                <option value="">Browser default</option>
+                <option value="UTC">UTC</option>
+                <option value="America/New_York">America/New_York</option>
+                <option value="America/Los_Angeles">America/Los_Angeles</option>
+                <option value="Europe/London">Europe/London</option>
+                <option value="Europe/Paris">Europe/Paris</option>
+                <option value="Asia/Tokyo">Asia/Tokyo</option>
+                <option value="Australia/Sydney">Australia/Sydney</option>
+            </select>
+            <div class="description">Specifies the time zone to use. This can affect the date shown if near midnight.</div>
+        </div>
+
+        <div class="option-group">
+            <h3>Calendar & Numbering System</h3>
+            <label for="calendar">calendar:</label>
+            <select id="calendar">
+                <option value="">Default (gregorian)</option>
+                <option value="buddhist">Buddhist</option>
+                <option value="chinese">Chinese</option>
+                <option value="hebrew">Hebrew</option>
+                <option value="islamic">Islamic</option>
+                <option value="japanese">Japanese</option>
+                <option value="persian">Persian</option>
+            </select>
+            <div class="description">Changes the calendar system used for the date</div>
+
+            <label for="numberingSystem">numberingSystem:</label>
+            <select id="numberingSystem">
+                <option value="">Default (latn)</option>
+                <option value="arab">Arabic-Indic</option>
+                <option value="beng">Bengali</option>
+                <option value="deva">Devanagari</option>
+                <option value="fullwide">Full width</option>
+                <option value="hans">Chinese simplified</option>
+                <option value="latn">Latin (Western)</option>
+            </select>
+            <div class="description">Changes the numbering system for numeric values</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="result-box">
+            <h2>Result</h2>
+            <div class="result" id="result">Select options and click "Format Date"</div>
+            <div class="code-box" id="codeExample">
+                // Code will appear here
+            </div>
+        </div>
+        <button onclick="formatDate()">Format Date</button>
+    </div>
+
+    <script>
+        // Set today's date as default
+        document.getElementById('testDate').value = new Date().toISOString().split('T')[0];
+
+        function formatDate() {
+            const dateInput = document.getElementById('testDate').value;
+            if (!dateInput) {
+                alert('Please select a date');
+                return;
+            }
+
+            const date = new Date(dateInput);
+            const locale = document.getElementById('locale').value;
+            
+            // Build options object
+            const options = {};
+            
+            // Date style (if set, overrides individual options)
+            const dateStyle = document.getElementById('dateStyle').value;
+            if (dateStyle) {
+                options.dateStyle = dateStyle;
+            } else {
+                // Individual options
+                const weekday = document.getElementById('weekday').value;
+                if (weekday) options.weekday = weekday;
+                
+                const era = document.getElementById('era').value;
+                if (era) options.era = era;
+                
+                const year = document.getElementById('year').value;
+                if (year) options.year = year;
+                
+                const month = document.getElementById('month').value;
+                if (month) options.month = month;
+                
+                const day = document.getElementById('day').value;
+                if (day) options.day = day;
+            }
+            
+            const timeZone = document.getElementById('timeZone').value;
+            if (timeZone) options.timeZone = timeZone;
+            
+            const calendar = document.getElementById('calendar').value;
+            if (calendar) options.calendar = calendar;
+            
+            const numberingSystem = document.getElementById('numberingSystem').value;
+            if (numberingSystem) options.numberingSystem = numberingSystem;
+            
+            try {
+                // Format the date
+                const formatted = date.toLocaleDateString(locale, options);
+                document.getElementById('result').textContent = formatted;
+                
+                // Generate code example
+                let codeExample = `const date = new Date('${dateInput}');\n`;
+                codeExample += `const formatted = date.toLocaleDateString('${locale}'`;
+                
+                if (Object.keys(options).length > 0) {
+                    codeExample += `, ${JSON.stringify(options, null, 2)}`;
+                }
+                codeExample += ');\n';
+                codeExample += `console.log(formatted); // "${formatted}"`;
+                
+                document.getElementById('codeExample').textContent = codeExample;
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+                document.getElementById('codeExample').textContent = '// Error occurred';
+            }
+        }
+
+        function applyPreset(preset) {
+            // Reset all options first
+            document.getElementById('dateStyle').value = '';
+            document.getElementById('weekday').value = '';
+            document.getElementById('era').value = '';
+            document.getElementById('year').value = '';
+            document.getElementById('month').value = '';
+            document.getElementById('day').value = '';
+            
+            switch(preset) {
+                case 'default':
+                    // Use browser defaults
+                    break;
+                case 'full':
+                    document.getElementById('dateStyle').value = 'full';
+                    break;
+                case 'long':
+                    document.getElementById('dateStyle').value = 'long';
+                    break;
+                case 'short':
+                    document.getElementById('dateStyle').value = 'short';
+                    break;
+                case 'custom1':
+                    // Month and year only
+                    document.getElementById('month').value = 'long';
+                    document.getElementById('year').value = 'numeric';
+                    break;
+                case 'custom2':
+                    // Weekday and full date
+                    document.getElementById('weekday').value = 'long';
+                    document.getElementById('year').value = 'numeric';
+                    document.getElementById('month').value = 'long';
+                    document.getElementById('day').value = 'numeric';
+                    break;
+            }
+            
+            formatDate();
+        }
+
+        // Format on page load
+        formatDate();
+    </script>
+</body>
+</html>
